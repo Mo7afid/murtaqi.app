@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مرتق | تتبع صلاتك</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a2e0e6cf5f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="app">
+    <header class="header">
+      <div class="profile">
+        <img src="avatar.png" alt="Avatar" class="avatar">
+        <div class="user-info">
+          <h2>مرحبًا، عماد 👋</h2>
+          <p>الرتبة: <span id="rank">مبتدئ</span> 🟢</p>
+        </div>
+      </div>
+      <div class="xp-container">
+        <div class="xp-bar">
+          <div class="xp-fill" id="xp-fill" style="width: 0%;"></div>
+        </div>
+        <p class="xp-text"><span id="xp">0</span> / <span id="next-xp">500</span> XP</p>
+      </div>
+    </header>
+
+    <section class="prayers-section">
+      <h3>صلوات اليوم</h3>
+      <div class="prayer-cards">
+        <div class="prayer-card" onclick="markPrayer('الفجر')">
+          <i class="fas fa-moon"></i>
+          <span>الفجر</span>
+        </div>
+        <div class="prayer-card" onclick="markPrayer('الظهر')">
+          <i class="fas fa-sun"></i>
+          <span>الظهر</span>
+        </div>
+        <div class="prayer-card" onclick="markPrayer('العصر')">
+          <i class="fas fa-cloud-sun"></i>
+          <span>العصر</span>
+        </div>
+        <div class="prayer-card" onclick="markPrayer('المغرب')">
+          <i class="fas fa-sunset"></i>
+          <span>المغرب</span>
+        </div>
+        <div class="prayer-card" onclick="markPrayer('العشاء')">
+          <i class="fas fa-moon-stars"></i>
+          <span>العشاء</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <button class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</button>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
