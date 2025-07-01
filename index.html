@@ -2,62 +2,100 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مرتق | تتبع صلاتك</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet" />
-  <script src="https://kit.fontawesome.com/a2e0e6cf5f.js" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>مرتق | تطبيق تتبع الصلاة</title>
 </head>
 <body>
 
-  <div class="app">
-    <header class="header">
-      <div class="profile">
-        <img src="avatar.png" alt="Avatar" class="avatar">
-        <div class="user-info">
-          <h2>مرحبًا، عماد 👋</h2>
-          <p>الرتبة: <span id="rank">مبتدئ</span> 🟢</p>
-        </div>
-      </div>
-      <div class="xp-container">
-        <div class="xp-bar">
-          <div class="xp-fill" id="xp-fill" style="width: 0%;"></div>
-        </div>
-        <p class="xp-text"><span id="xp">0</span> / <span id="next-xp">500</span> XP</p>
-      </div>
-    </header>
+  <div id="app">
 
-    <section class="prayers-section">
-      <h3>صلوات اليوم</h3>
-      <div class="prayer-cards">
-        <div class="prayer-card" onclick="markPrayer('الفجر')">
-          <i class="fas fa-moon"></i>
-          <span>الفجر</span>
-        </div>
-        <div class="prayer-card" onclick="markPrayer('الظهر')">
-          <i class="fas fa-sun"></i>
-          <span>الظهر</span>
-        </div>
-        <div class="prayer-card" onclick="markPrayer('العصر')">
-          <i class="fas fa-cloud-sun"></i>
-          <span>العصر</span>
-        </div>
-        <div class="prayer-card" onclick="markPrayer('المغرب')">
-          <i class="fas fa-sunset"></i>
-          <span>المغرب</span>
-        </div>
-        <div class="prayer-card" onclick="markPrayer('العشاء')">
-          <i class="fas fa-moon-stars"></i>
-          <span>العشاء</span>
-        </div>
+    <!-- شريط التنقل -->
+    <nav id="nav">
+      <button data-section="dashboard">الرئيسية</button>
+      <button data-section="prayer-times">أوقات الصلاة</button>
+      <button data-section="azkar">الأدعية</button>
+      <button data-section="profile">حسابي</button>
+    </nav>
+
+    <!-- قسم تتبع الصلاة -->
+    <section id="dashboard" class="section">
+      <h1>تتبع الصلاة</h1>
+      <div id="profile-info">
+        <h2>مرحبًا، عماد 👋</h2>
+        <p>الرتبة: <span id="rank">مبتدئ</span></p>
+        <p>نقاط الخبرة (XP): <span id="xp">0</span></p>
       </div>
+      <h3>صلوات اليوم</h3>
+      <ul id="prayer-list">
+        <li><button data-prayer="الفجر">الفجر</button></li>
+        <li><button data-prayer="الظهر">الظهر</button></li>
+        <li><button data-prayer="العصر">العصر</button></li>
+        <li><button data-prayer="المغرب">المغرب</button></li>
+        <li><button data-prayer="العشاء">العشاء</button></li>
+      </ul>
     </section>
 
-    <footer>
-      <button class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</button>
-    </footer>
+    <!-- قسم أوقات الصلاة -->
+    <section id="prayer-times" class="section" style="display:none;">
+      <h1>أوقات الصلاة اليوم</h1>
+      <ul>
+        <li>الفجر: 04:35 ص</li>
+        <li>الظهر: 12:15 م</li>
+        <li>العصر: 03:45 م</li>
+        <li>المغرب: 06:30 م</li>
+        <li>العشاء: 08:00 م</li>
+      </ul>
+    </section>
+
+    <!-- قسم الأدعية -->
+    <section id="azkar" class="section" style="display:none;">
+      <h1>الأدعية بعد الصلاة</h1>
+      <ul>
+        <li>اللهم اجعلني من التوابين واجعلني من المتطهرين.</li>
+        <li>اللهم اجعل صلاتي نوراً لي في قبري وعلى صراط يوم القيامة.</li>
+        <li>اللهم اجعلني من عبادك الصالحين.</li>
+        <li>اللهم تقبل صلاتي وصلاتي وسائر أعمالي.</li>
+      </ul>
+    </section>
+
+    <!-- قسم الحساب الشخصي -->
+    <section id="profile" class="section" style="display:none;">
+      <h1>حسابي الشخصي</h1>
+      <p>اسم المستخدم: عماد</p>
+      <p>البريد الإلكتروني: emad@example.com</p>
+      <button id="logout-btn">تسجيل الخروج</button>
+    </section>
+
   </div>
 
-  <script src="app.js"></script>
+  <script>
+    // جافاسكربت بسيط للتبديل بين الأقسام
+    const buttons = document.querySelectorAll('#nav button');
+    const sections = document.querySelectorAll('.section');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-section');
+        sections.forEach(sec => {
+          sec.style.display = sec.id === target ? 'block' : 'none';
+        });
+      });
+    });
+
+    // مثال بسيط لتسجيل الصلاة (يمكن تطويره لاحقاً)
+    document.querySelectorAll('#prayer-list button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        alert('تم تسجيل صلاة ' + btn.getAttribute('data-prayer'));
+        // هنا يمكن إضافة كود زيادة XP وتحديث الرتبة
+      });
+    });
+
+    // تسجيل خروج (مثال فقط)
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      alert('تم تسجيل الخروج');
+      // هنا تضيف كود تسجيل الخروج الفعلي
+    });
+  </script>
+
 </body>
 </html>
