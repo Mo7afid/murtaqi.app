@@ -1,104 +1,115 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    /* الصق هنا كود CSS اللي فوق */
-  </style>
-
-  <title>مرتق | تطبيق تتبع الصلاة</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مرتق - تتبع الصلاة</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div id="app">
+  <!-- ✅ الشريط العلوي (تاريخ) -->
+  <header class="top-bar">
+    <div class="date-today">
+      <h2>اليوم ٢ يوليو، ٢٠٢٥</h2>
+      <p>٧ محرم ١٤٤٧</p>
+    </div>
+    <div class="days-row">
+      <button class="day active">الأربعاء<br>٢</button>
+      <button class="day">الثلاثاء<br>١</button>
+      <button class="day">الإثنين<br>٣٠</button>
+      <button class="day">الأحد<br>٢٩</button>
+    </div>
+  </header>
 
-    <!-- شريط التنقل -->
-    <nav id="nav">
-      <button data-section="dashboard">الرئيسية</button>
-      <button data-section="prayer-times">أوقات الصلاة</button>
-      <button data-section="azkar">الأدعية</button>
-      <button data-section="profile">حسابي</button>
-    </nav>
-
-    <!-- قسم تتبع الصلاة -->
-    <section id="dashboard" class="section">
-      <h1>تتبع الصلاة</h1>
-      <div id="profile-info">
-        <h2>مرحبًا، عماد 👋</h2>
-        <p>الرتبة: <span id="rank">مبتدئ</span></p>
-        <p>نقاط الخبرة (XP): <span id="xp">0</span></p>
+  <!-- ✅ محتوى الصفحة الرئيسية -->
+  <main class="page" id="home-page">
+    <section class="prayers-list">
+      <h3>الصلوات</h3>
+      <div class="prayer-card fajr">
+        <div class="icon">🌙</div>
+        <div class="info">
+          <h4>الفجر</h4>
+          <div class="status-icons">🕓 🕌 📅</div>
+        </div>
       </div>
-      <h3>صلوات اليوم</h3>
-      <ul id="prayer-list">
-        <li><button data-prayer="الفجر">الفجر</button></li>
-        <li><button data-prayer="الظهر">الظهر</button></li>
-        <li><button data-prayer="العصر">العصر</button></li>
-        <li><button data-prayer="المغرب">المغرب</button></li>
-        <li><button data-prayer="العشاء">العشاء</button></li>
-      </ul>
+      <div class="prayer-card duhr">
+        <div class="icon">☀️</div>
+        <div class="info">
+          <h4>الظهر</h4>
+        </div>
+      </div>
+      <div class="prayer-card asr">
+        <div class="icon">🌤️</div>
+        <div class="info">
+          <h4>العصر</h4>
+        </div>
+      </div>
+      <div class="prayer-card maghrib">
+        <div class="icon">🌇</div>
+        <div class="info">
+          <h4>المغرب</h4>
+        </div>
+      </div>
+      <div class="prayer-card isha">
+        <div class="icon">🌙+</div>
+        <div class="info">
+          <h4>العشاء</h4>
+        </div>
+      </div>
     </section>
+  </main>
 
-    <!-- قسم أوقات الصلاة -->
-    <section id="prayer-times" class="section" style="display:none;">
-      <h1>أوقات الصلاة اليوم</h1>
-      <ul>
-        <li>الفجر: 04:35 ص</li>
-        <li>الظهر: 12:15 م</li>
-        <li>العصر: 03:45 م</li>
-        <li>المغرب: 06:30 م</li>
-        <li>العشاء: 08:00 م</li>
-      </ul>
-    </section>
+  <!-- ✅ صفحة الإحصائيات -->
+  <main class="page" id="stats-page" style="display: none;">
+    <h3>ملخص الحالة</h3>
+    <div class="stats-grid">
+      <div class="stat-card on-time">
+        <h4>On time</h4>
+        <p>٪٨٠ من الأوقات</p>
+      </div>
+      <div class="stat-card in-jamaah">
+        <h4>In jamaah</h4>
+        <p>٪٢٠ من الأوقات</p>
+      </div>
+      <div class="stat-card late">
+        <h4>Late</h4>
+        <p>٪٠</p>
+      </div>
+      <div class="stat-card not-prayed">
+        <h4>Not prayed</h4>
+        <p>٪٠</p>
+      </div>
+    </div>
+  </main>
 
-    <!-- قسم الأدعية -->
-    <section id="azkar" class="section" style="display:none;">
-      <h1>الأدعية بعد الصلاة</h1>
-      <ul>
-        <li>اللهم اجعلني من التوابين واجعلني من المتطهرين.</li>
-        <li>اللهم اجعل صلاتي نوراً لي في قبري وعلى صراط يوم القيامة.</li>
-        <li>اللهم اجعلني من عبادك الصالحين.</li>
-        <li>اللهم تقبل صلاتي وصلاتي وسائر أعمالي.</li>
-      </ul>
-    </section>
+  <!-- ✅ صفحة الإعدادات -->
+  <main class="page" id="settings-page" style="display: none;">
+    <h3>الإعدادات</h3>
+    <ul class="settings-list">
+      <li>الإشعارات 🔔</li>
+      <li>النسخ الاحتياطي ☁️</li>
+      <li>المظهر 🌗</li>
+      <li>شارك التطبيق 🤝</li>
+      <li>سياسة الخصوصية 🔒</li>
+    </ul>
+  </main>
 
-    <!-- قسم الحساب الشخصي -->
-    <section id="profile" class="section" style="display:none;">
-      <h1>حسابي الشخصي</h1>
-      <p>اسم المستخدم: عماد</p>
-      <p>البريد الإلكتروني: emad@example.com</p>
-      <button id="logout-btn">تسجيل الخروج</button>
-    </section>
+  <!-- ✅ شريط التنقل السفلي -->
+  <nav class="bottom-nav">
+    <button onclick="switchPage('home-page')">🏠</button>
+    <button onclick="switchPage('stats-page')">📊</button>
+    <button onclick="switchPage('settings-page')">⚙️</button>
+  </nav>
 
-  </div>
-
+  <!-- ✅ سكريبت تنقل بسيط -->
   <script>
-    // جافاسكربت بسيط للتبديل بين الأقسام
-    const buttons = document.querySelectorAll('#nav button');
-    const sections = document.querySelectorAll('.section');
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.getAttribute('data-section');
-        sections.forEach(sec => {
-          sec.style.display = sec.id === target ? 'block' : 'none';
-        });
+    function switchPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.style.display = 'none';
       });
-    });
-
-    // مثال بسيط لتسجيل الصلاة (يمكن تطويره لاحقاً)
-    document.querySelectorAll('#prayer-list button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        alert('تم تسجيل صلاة ' + btn.getAttribute('data-prayer'));
-        // هنا يمكن إضافة كود زيادة XP وتحديث الرتبة
-      });
-    });
-
-    // تسجيل خروج (مثال فقط)
-    document.getElementById('logout-btn').addEventListener('click', () => {
-      alert('تم تسجيل الخروج');
-      // هنا تضيف كود تسجيل الخروج الفعلي
-    });
+      document.getElementById(pageId).style.display = 'block';
+    }
   </script>
 
 </body>
