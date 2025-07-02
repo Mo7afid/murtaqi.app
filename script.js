@@ -1,98 +1,54 @@
-// بيانات المستخدم - مؤقتة (يمكن تخزينها في Firebase لاحقًا)
-let userData = {
-  xp: 0,
-  level: 1,
-  prayersDone: {
-    الفجر: false,
-    الظهر: false,
-    العصر: false,
-    المغرب: false,
-    العشاء: false,
-  }
-};
+// تبديل الصفحات
+function switchPage(pageId) {
+  document.querySelectorAll('.page').forEach(page => {
+    page.style.display = 'none';
+  });
+  document.getElementById(pageId).style.display = 'block';
 
-// تعريف نقاط XP لكل صلاة
-const XP_PER_PRAYER = 100;
-
-// تعريف مستويات XP (تقدم على حسب XP)
-const levels = [
-  { level: 1, name: "مبتدئ", xpNeeded: 0 },
-  { level: 2, name: "محافظ", xpNeeded: 500 },
-  { level: 3, name: "مُتقدم", xpNeeded: 1200 },
-  { level: 4, name: "مُخلص", xpNeeded: 2200 },
-  { level: 5, name: "نَجِد", xpNeeded: 3500 },
-  // ممكن تضيف مستويات أكثر حسب رغبتك
-];
-
-// تحديث الواجهة بعد التغيير
-function updateUI() {
-  // حساب المستوى الحالي بناءً على xp
-  let currentLevel = levels[levels.length - 1]; // افتراضياً أعلى مستوى
-  for (let i = levels.length - 1; i >= 0; i--) {
-    if (userData.xp >= levels[i].xpNeeded) {
-      currentLevel = levels[i];
-      break;
-    }
-  }
-  userData.level = currentLevel.level;
-
-  // تحديث النصوص في الصفحة
-  document.getElementById("rank").textContent = currentLevel.name;
-  document.getElementById("xp").textContent = userData.xp;
-
-  // الـ XP المطلوب للمستوى التالي
-  const nextLevel = levels.find(l => l.level === currentLevel.level + 1);
-  const nextXpNeeded = nextLevel ? nextLevel.xpNeeded : currentLevel.xpNeeded;
-  document.getElementById("next-xp").textContent = nextXpNeeded;
-
-  // حساب نسبة الشريط
-  const xpRange = nextXpNeeded - currentLevel.xpNeeded;
-  const xpProgress = userData.xp - currentLevel.xpNeeded;
-  const percent = nextLevel ? (xpProgress / xpRange) * 100 : 100;
-
-  // تحديث شريط التقدم
-  const xpFill = document.getElementById("xp-fill");
-  xpFill.style.width = percent + "%";
-
-  // تحديث أزرار الصلاة (معطلة للصلوات المنجزة)
-  for (const prayer in userData.prayersDone) {
-    const card = document.querySelector(`.prayer-card[onclick*="${prayer}"]`);
-    if (userData.prayersDone[prayer]) {
-      card.classList.add("done");
-      card.style.cursor = "default";
-      card.onclick = null;
-    } else {
-      card.classList.remove("done");
-      card.style.cursor = "pointer";
-      card.onclick = () => markPrayer(prayer);
-    }
-  }
+  // تحديث زر التنقل السفلي (اختياري)
+  document.querySelectorAll('.bottom-nav button').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  const activeBtn = [...document.querySelectorAll('.bottom-nav button')]
+    .find(btn => btn.getAttribute('onclick').includes(pageId));
+  if (activeBtn) activeBtn.classList.add('active');
 }
 
-// علامة على أداء الصلاة
-function markPrayer(prayer) {
-  if (userData.prayersDone[prayer]) return; // منع التكرار
+// نظام XP و رتب
+let xp = 0;
+const xpPerPrayer = 100;
+const xpDisplay = document.getElementById('xp');
+const rankDisplay = document.getElementById('rank');
 
-  // تحديث بيانات الصلاة
-  userData.prayersDone[prayer] = true;
-  userData.xp += XP_PER_PRAYER;
-
-  // تحديث الواجهة
-  updateUI();
-
-  // TODO: تخزين البيانات في Firebase عند الربط
-  console.log(`تم تسجيل أداء صلاة ${prayer}. XP الحالي: ${userData.xp}`);
+// تحديث الرتبة حسب XP
+function updateRank() {
+  let rank = "مبتدئ";
+  if (xp >= 500) rank = "متقدم";
+  if (xp >= 1000) rank = "محترف";
+  if (xp >= 2000) rank = "خاشع";
+  rankDisplay.textContent = rank;
 }
 
-// تسجيل خروج (يمكن ربطه بـ Firebase Auth)
-function logout() {
-  alert("تم تسجيل الخروج. شكرًا لاستخدامك مرتق!");
-  // TODO: أضف عملية تسجيل الخروج هنا عند ربط Firebase
-  // حالياً فقط إعادة تحميل الصفحة
-  location.reload();
-}
+// تسجيل صلاة
+document.querySelectorAll('.prayer-card').forEach(card => {
+  card.addEventListener('click', () => {
+    xp += xpPerPrayer;
+    if (xpDisplay) xpDisplay.textContent = xp;
+    updateRank();
+    alert("تم تسجيل الصلاة! +100 XP 🎉");
+  });
+});
 
-// تهيئة الصفحة
-window.onload = () => {
-  updateUI();
-};
+// تخزين محلي (اختياري)
+window.addEventListener('beforeunload', () => {
+  localStorage.setItem("xp", xp);
+});
+
+window.addEventListener('load', () => {
+  const savedXP = localStorage.getItem("xp");
+  if (savedXP) {
+    xp = parseInt(savedXP);
+    if (xpDisplay) xpDisplay.textContent = xp;
+    updateRank();
+  }
+});
