@@ -1,121 +1,149 @@
-/* خطوط وألوان */
-body {
-  font-family: 'Cairo', sans-serif;
-  background: linear-gradient(135deg, #5b21b6, #a78bfa);
-  color: #f3f4f6;
+/* إعدادات عامة */
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  padding: 0;
+  font-family: 'Cairo', sans-serif;
+}
+body {
+  background-color: #f9fafb;
+  color: #111827;
+  direction: rtl;
 }
 
-#app {
-  max-width: 430px;
-  margin: 0 auto;
-  background: #1e1b4b;
-  border-radius: 25px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+/* ✅ شريط التاريخ العلوي */
+.top-bar {
   padding: 20px;
-  flex-grow: 1;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+.top-bar h2 {
+  font-size: 1.2rem;
+  color: #1f2937;
+}
+.top-bar p {
+  color: #6b7280;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+.days-row {
   display: flex;
-  flex-direction: column;
+  overflow-x: auto;
+  gap: 10px;
+}
+.day {
+  padding: 8px 12px;
+  background: #e5e7eb;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  min-width: 60px;
+  text-align: center;
+  color: #1f2937;
+  cursor: pointer;
+  border: none;
+}
+.day.active {
+  background: #3b82f6;
+  color: #fff;
+  font-weight: bold;
 }
 
-/* شريط التنقل */
-#nav {
+/* ✅ صفحة الصلوات */
+.page {
+  padding: 20px;
+}
+.prayers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.prayer-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.prayer-card .icon {
+  font-size: 1.8rem;
+  margin-left: 12px;
+}
+.prayer-card .info h4 {
+  margin-bottom: 6px;
+  font-size: 1.1rem;
+}
+.status-icons {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+/* ✅ الإحصائيات */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+.stat-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  text-align: center;
+}
+.stat-card h4 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+.stat-card p {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+.stat-card.on-time    { border-right: 4px solid #facc15; }
+.stat-card.in-jamaah  { border-right: 4px solid #10b981; }
+.stat-card.late       { border-right: 4px solid #ef4444; }
+.stat-card.not-prayed { border-right: 4px solid #6b7280; }
+
+/* ✅ صفحة الإعدادات */
+.settings-list {
+  list-style: none;
+  margin-top: 20px;
+}
+.settings-list li {
+  background: #fff;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ✅ شريط التنقل السفلي */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 60px;
+  background: #fff;
   display: flex;
   justify-content: space-around;
-  background: #2c2674;
-  border-radius: 15px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 15px rgba(148, 51, 243, 0.6);
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+  z-index: 10;
 }
-
-#nav button {
+.bottom-nav button {
   background: none;
   border: none;
-  color: #bbb;
-  padding: 12px 10px;
-  font-weight: 600;
+  font-size: 1.5rem;
+  color: #6b7280;
   cursor: pointer;
-  font-size: 1rem;
-  flex-grow: 1;
-  transition: color 0.3s ease;
-  user-select: none;
+  transition: 0.2s;
 }
-
-#nav button:hover,
-#nav button.active {
-  color: #fbbf24;
-  font-weight: 700;
+.bottom-nav button:hover {
+  color: #3b82f6;
 }
-
-/* أقسام المحتوى */
-.section {
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-h1, h2, h3 {
-  font-weight: 700;
-  margin-bottom: 15px;
-}
-
-button {
-  background: linear-gradient(135deg, #7c3aed, #9333ea);
-  border: none;
-  border-radius: 15px;
-  padding: 12px 18px;
-  color: white;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  user-select: none;
-}
-
-button:hover {
-  background: linear-gradient(135deg, #9333ea, #7c3aed);
-}
-
-/* قوائم */
-ul {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 20px;
-}
-
-ul li {
-  margin-bottom: 12px;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-/* زر تسجيل الخروج */
-#logout-btn {
-  background: linear-gradient(135deg, #f97316, #ea580c);
-  width: 100%;
-  border-radius: 25px;
-  padding: 14px 0;
-  font-weight: 700;
-  font-size: 1.1rem;
-  margin-top: 20px;
-  box-shadow: 0 8px 20px rgba(234, 88, 12, 0.8);
-}
-
-#logout-btn:hover {
-  background: linear-gradient(135deg, #ea580c, #c2410c);
-}
-
-/* استجابة الشاشة */
-@media (max-width: 450px) {
-  #app {
-    padding: 15px 12px;
-  }
-  #nav button {
-    font-size: 0.9rem;
-    padding: 10px 5px;
-  }
-}
-  
